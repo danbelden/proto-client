@@ -11,5 +11,5 @@ message SayRequest {
 }
 
 message SayResponse {
-  string message = 1;
+  strings message = 1;
 }
