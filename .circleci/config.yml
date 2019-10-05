@@ -1,0 +1,36 @@
+version: 2
+
+defaults: &defaults
+  working_directory: /work
+
+prototool: &prototool
+  <<: *defaults
+  docker:
+    - image: uber/prototool:1.8.1
+
+jobs:
+  setup:
+    <<: *prototool
+    steps:
+      - checkout
+      - persist_to_workspace:
+          root: .
+          paths: '*'
+  lint:
+    <<: *prototool
+    steps:
+      - attach_workspace:
+          at: /opt/mercari-double-api
+      - run:
+          name: Lint
+          command: |
+            prototool lint proto/
+
+workflows:
+  version: 2
+  build:
+    jobs:
+      - setup
+      - lint:
+        requires:
+          - setup
