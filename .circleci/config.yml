@@ -20,7 +20,7 @@ jobs:
     <<: *prototool
     steps:
       - attach_workspace:
-          at: /opt/mercari-double-api
+          at: /work
       - run:
           name: Lint
           command: |
@@ -32,5 +32,5 @@ workflows:
     jobs:
       - setup
       - lint:
-        requires:
-          - setup
+          requires:
+            - setup

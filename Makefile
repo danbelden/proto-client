@@ -7,5 +7,3 @@ lint: ## Lint check all proto files
 
 fmt: ## Format all proto files
 	@docker run -it -v $(PWD):/work uber/prototool:1.8.1 prototool format proto/ -w
-
-
