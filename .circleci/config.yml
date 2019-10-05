@@ -10,7 +10,8 @@ prototool: &prototool
 
 docker: &docker_builder
   <<: *defaults
-  image: ubuntu-1604:201903-01
+  machine:
+    image: circleci/classic:201703-01
 
 jobs:
   setup:
@@ -35,10 +36,6 @@ jobs:
       - setup_remote_docker
       - attach_workspace:
           at: /tmp/workspace
-      - run:
-          name: Docker setup
-          command: |
-            ./tool/ci-docker-setup.sh
       - run:
           name: Build
           command: |
