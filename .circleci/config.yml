@@ -1,16 +1,21 @@
 version: 2
 
 defaults: &defaults
-  working_directory: /work
+  working_directory: /tmp/workspace
 
 prototool: &prototool
   <<: *defaults
   docker:
     - image: uber/prototool:1.8.1
 
+docker: &docker_builder
+  <<: *defaults
+  machine:
+    image: circleci/classic:201703-01
+
 jobs:
   setup:
-    <<: *prototool
+    machine: true
     steps:
       - checkout
       - persist_to_workspace:
@@ -20,11 +25,20 @@ jobs:
     <<: *prototool
     steps:
       - attach_workspace:
-          at: /work
+          at: /tmp/workspace
       - run:
           name: Lint
           command: |
             prototool format proto/ -d
+  build-go:
+    <<: *docker_builder
+    steps:
+      - attach_workspace:
+          at: /tmp/workspace
+      - run:
+          name: Build
+          command: |
+            make build-go
 
 workflows:
   version: 2
@@ -34,3 +48,6 @@ workflows:
       - lint:
           requires:
             - setup
+      - build-go:
+          requires:
+            - lint
