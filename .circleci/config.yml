@@ -8,10 +8,9 @@ prototool: &prototool
   docker:
     - image: uber/prototool:1.8.1
 
-docker: &docker
+docker: &docker_builder
   <<: *defaults
-  docker:
-    - image: circleci/buildpack-deps:stretch
+  image: ubuntu-1604:201903-01
 
 jobs:
   setup:
@@ -31,11 +30,15 @@ jobs:
           command: |
             prototool format proto/ -d
   build-go:
-    <<: *docker
+    <<: *docker_builder
     steps:
       - setup_remote_docker
       - attach_workspace:
           at: /tmp/workspace
+      - run:
+          name: Docker setup
+          command: |
+            ./tool/ci-docker-setup.sh
       - run:
           name: Build
           command: |
