@@ -34,8 +34,12 @@ GO_MOCK_FILE_PATH="${GO_FILE_DIR}/mock_${GO_FILE_NAME}"
 GO_FILE_PATH_REL=".${GO_FILE_PATH_FULL#"${ROOT_DIR_FULL}"}"
 GO_MOCK_FILE_REL=".${GO_MOCK_FILE_PATH#"${ROOT_DIR_FULL}"}"
 
+## Ensure docker containers run as host user
+USER_ID=$(id -u)
+GROUP_ID=$(id -g)
+
 ## Generate the mock file with docker
-docker run -v ${ROOT_DIR}:/tmp/workspace -w /tmp/workspace jare/go-tools mockgen \
+docker run --user ${USER_ID}:${GROUP_ID} -v ${ROOT_DIR}:/tmp/workspace -w /tmp/workspace jare/go-tools mockgen \
   -source=${GO_FILE_PATH_REL} \
   -package=${GO_PACKAGE} \
   -destination=${GO_MOCK_FILE_REL}

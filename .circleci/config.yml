@@ -38,7 +38,7 @@ jobs:
       - run:
           name: Build
           command: |
-            ./tool/build-go.sh
+            make build-go
 
 workflows:
   version: 2
