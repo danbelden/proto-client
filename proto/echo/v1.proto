@@ -12,4 +12,7 @@ message SayRequest {
 
 message SayResponse {
   string message = 1;
+
+
+  
 }
