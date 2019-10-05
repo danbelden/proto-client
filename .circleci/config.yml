@@ -1,7 +1,7 @@
 version: 2
 
 defaults: &defaults
-  working_directory: /work
+  working_directory: /opt/proto-client
 
 prototool: &prototool
   <<: *defaults
@@ -25,7 +25,7 @@ jobs:
     <<: *prototool
     steps:
       - attach_workspace:
-          at: /work
+          at: /opt/proto-client
       - run:
           name: Lint
           command: |
@@ -34,7 +34,7 @@ jobs:
     <<: *docker
     steps:
       - attach_workspace:
-          at: /work
+          at: /opt/proto-client
       - setup_remote_docker
       - run:
           name: Build
