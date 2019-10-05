@@ -33,7 +33,6 @@ jobs:
   build-go:
     <<: *docker_builder
     steps:
-      - setup_remote_docker
       - attach_workspace:
           at: /tmp/workspace
       - run:
