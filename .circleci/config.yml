@@ -8,6 +8,11 @@ prototool: &prototool
   docker:
     - image: uber/prototool:1.8.1
 
+docker: &docker
+  <<: *defaults
+  docker:
+    - image: circleci/buildpack-deps:stretch
+
 jobs:
   setup:
     machine: true
@@ -26,7 +31,7 @@ jobs:
           command: |
             prototool format proto/ -d
   build-go:
-    machine: true
+    <<: *docker
     steps:
       - attach_workspace:
           at: /work
