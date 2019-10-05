@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+## Terminate if an error is encountered
+set -e
+
 ## Helper vars
 CPUS=`getconf _NPROCESSORS_ONLN`
 

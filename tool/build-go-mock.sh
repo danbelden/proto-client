@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+## Terminate if an error is encountered
+set -e
+
 ## Hack for mac OSX
 realpath() {
   [[ $1 = /* ]] && echo "$1" || echo "$PWD/${1#./}"
