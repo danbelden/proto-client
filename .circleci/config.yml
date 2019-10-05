@@ -24,7 +24,7 @@ jobs:
       - run:
           name: Lint
           command: |
-            prototool lint proto/
+            prototool format proto/ -d
 
 workflows:
   version: 2
