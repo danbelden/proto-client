@@ -102,7 +102,8 @@ git config user.email bot_email
 
 ## Commit and push the changes to the remote repo
 git commit -m "[Bot] Auto committed code changes" > /dev/null 2>&1
-git push -f -u origin ${PROTO_CLIENT_GIT_BRANCH} > /dev/null 2>&1
+echo "[Debug] Pushing code changes ..."
+git push -f -u origin ${PROTO_CLIENT_GIT_BRANCH}
 echo "[Debug] Comitted changes to platform-client-go branch ${PROTO_CLIENT_GIT_BRANCH}"
 echo "[Debug] https://github.com/danbelden/proto-client-go"
 
