@@ -10,3 +10,8 @@ fmt: ## Format all proto files
 
 build-go: ## Build the go sdk from the proto files
 	@./tool/build-go.sh
+
+### ---- Non local commands below here ----
+
+push-go:
+	@./tool/push-go.sh

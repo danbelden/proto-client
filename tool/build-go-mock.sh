@@ -3,19 +3,17 @@
 ## Terminate if an error is encountered
 set -e
 
-## Hack for mac OSX
-realpath() {
-  [[ $1 = /* ]] && echo "$1" || echo "$PWD/${1#./}"
-}
-
 ## If no path is given as arg 1 error
 if [[ -z $1 || ! -f $1 ]]; then
   echo "[Error] First argument should be a path to a go file"
   exit 1
 fi
 
+## Import the helper methods
+SCRIPT_DIR=`cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd`
+source "${SCRIPT_DIR}/helpers.sh"
+
 ## Generic vars
-SCRIPT_DIR=`cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd `
 ROOT_DIR=`dirname ${SCRIPT_DIR}`
 ROOT_DIR_FULL=`realpath ${ROOT_DIR}`
 

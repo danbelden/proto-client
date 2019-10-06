@@ -39,6 +39,10 @@ jobs:
           name: Build
           command: |
             make build-go
+      - run:
+          name: Push
+          command: |
+            make push-go
 
 workflows:
   version: 2
