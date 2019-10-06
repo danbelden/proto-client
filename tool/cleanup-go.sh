@@ -3,6 +3,7 @@
 ## Config vars
 PROTO_REPO="git@github.com:danbelden/proto-client.git"
 CLEANUP_REPO="git@github.com:danbelden/proto-client-go.git"
+GIT_WORKSPACE="/tmp/workspace-git"
 
 ## Find the branch names on the proto-client repo
 echo "[Debug] Branches in ${PROTO_REPO}"
@@ -36,8 +37,26 @@ if [[ ${#DELETE_BRANCHES[@]} == 0 ]]; then
   exit 0
 fi
 
-## Loop the delete branches and remove them
+## Setup ready to perform deletes
+BACKUP_PWD=${PWD}
+CLEANUP_REPO_DIR=$(basename ${CLEANUP_REPO} .git)
+cd ${GIT_WORKSPACE}
+if [[ ! -d ${CLEANUP_REPO_DIR} ]]; then
+    git clone ${CLEANUP_REPO} > /dev/null 2>&1
+fi
+cd ${CLEANUP_REPO_DIR}
+git fetch > /dev/null 2>&1
+
+## Loop the delete branches and git push delete them
 echo "[Debug] Deleting non-sync branches in ${CLEANUP_REPO} ..."
 for BRANCH_NAME in ${DELETE_BRANCHES[@]}; do
-  echo "[Debug] Removing branch ${BRANCH_NAME}"
+  if [[ ${BRANCH_NAME} == "master" ]]; then
+    echo "[Warn] Skipping delete of master branch"
+    continue
+  fi
+  echo "[Debug] Removing branch ${BRANCH_NAME} ..."
+  git push origin --delete ${BRANCH_NAME}
 done
+
+## Switch back to previous pwd
+cd ${BACKUP_PWD}
