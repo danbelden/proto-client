@@ -16,5 +16,5 @@ build-go: ## Build the go sdk from the proto files
 push-go:
 	@./tool/push-go.sh
 
-cleanup-go:
+cleanup:
 	@./tool/cleanup-go.sh
