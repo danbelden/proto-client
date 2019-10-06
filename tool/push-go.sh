@@ -18,9 +18,15 @@ ROOT_DIR_FULL=`realpath ${ROOT_DIR}`
 PROTO_CLIENT_GIT_BRANCH=`git branch | grep \* | cut -d ' ' -f2`
 BUILD_DIR_FULL="${ROOT_DIR}/build/go"
 
-## If the test file is not modified recently throw an error
+## Fetch the modified timestamp of the test file
 LAST_MODIFIED_TEST_FILE_PATH="${BUILD_DIR_FULL}/${LAST_MODIFIED_TEST_FILE}"
-LAST_MODIFIED_TIMESTAMP=`stat -f "%B" "${LAST_MODIFIED_TEST_FILE_PATH}"`
+if [[ ${OSTYPE} == "darwin"* ]]; then
+  LAST_MODIFIED_TIMESTAMP=`stat -f "%B" "${LAST_MODIFIED_TEST_FILE_PATH}"`
+else
+  LAST_MODIFIED_TIMESTAMP=`stat -c "%Y" "${LAST_MODIFIED_TEST_FILE_PATH}"`
+fi
+
+## If the test file is not modified recently throw an error
 CURRENT_TIMESTAMP=`date +%s`
 TIMESTAMP_DIFF=$((${CURRENT_TIMESTAMP}-${LAST_MODIFIED_TIMESTAMP}))
 if [[ ${TIMESTAMP_DIFF} -gt ${BUILD_TIMETAMP_AGE_THRESHOLD} ]]; then
