@@ -43,6 +43,15 @@ jobs:
           name: Push
           command: |
             make push-go
+  clean-up:
+    machine: true
+    steps:
+      - attach_workspace:
+          at: /tmp/workspace
+      - run:
+          name: Cleanup
+          command: |
+            make cleanup
 
 workflows:
   version: 2
@@ -55,3 +64,9 @@ workflows:
       - build-go:
           requires:
             - lint
+      - clean-up:
+          requires:
+            - build-go
+          filters:
+            branches:
+              only: master
