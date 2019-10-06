@@ -3,6 +3,10 @@ version: 2
 defaults: &defaults
   working_directory: /tmp/workspace
 
+machine: &machine
+  <<: *defaults
+  machine: true
+
 prototool: &prototool
   <<: *defaults
   docker:
@@ -15,7 +19,7 @@ docker: &docker_builder
 
 jobs:
   setup:
-    machine: true
+    <<: *machine
     steps:
       - checkout
       - persist_to_workspace:
@@ -44,7 +48,7 @@ jobs:
           command: |
             make push-go
   clean-up:
-    machine: true
+    <<: *machine
     steps:
       - attach_workspace:
           at: /tmp/workspace
