@@ -97,8 +97,8 @@ if [[ ${INVALID_MODIFIED_FILES} == true ]]; then
 fi
 
 ## Switch the git context to a bot user
-git config user.name bot_username
-git config user.email bot_email
+git config user.name "danbelden-bot"
+git config user.email "me@danbelden.com"
 
 ## Commit and push the changes to the remote repo
 git commit -m "[Bot] Auto committed code changes" > /dev/null 2>&1
