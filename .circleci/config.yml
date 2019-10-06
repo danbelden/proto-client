@@ -39,13 +39,8 @@ jobs:
           name: Build
           command: |
             make build-go
-  push-go:
-    <<: *docker_builder
-    steps:
-      - attach_workspace:
-          at: /tmp/workspace
       - run:
-          name: Build
+          name: Push
           command: |
             make push-go
 
