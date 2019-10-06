@@ -75,7 +75,7 @@ git add .
 GIT_MODIFIED_FILES=`git status -s | cut -d' ' -f3`
 if [[ -z ${GIT_MODIFIED_FILES} ]]; then
   cd ${BACKUP_PWD}
-  echo "[Debug] No modified files to commit commit"
+  echo "[Debug] No modified files to commit"
   exit 0
 fi
 
