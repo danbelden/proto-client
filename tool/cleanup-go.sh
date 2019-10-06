@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+## Terminate if an error is encountered
+set -e
+
 ## Config vars
 PROTO_REPO="git@github.com:danbelden/proto-client.git"
 CLEANUP_REPO="git@github.com:danbelden/proto-client-go.git"
@@ -40,6 +43,9 @@ fi
 ## Setup ready to perform deletes
 BACKUP_PWD=${PWD}
 CLEANUP_REPO_DIR=$(basename ${CLEANUP_REPO} .git)
+if [[ ! -d ${GIT_WORKSPACE} ]]; then
+  mkdir -p ${GIT_WORKSPACE}
+fi
 cd ${GIT_WORKSPACE}
 if [[ ! -d ${CLEANUP_REPO_DIR} ]]; then
     git clone ${CLEANUP_REPO} > /dev/null 2>&1
